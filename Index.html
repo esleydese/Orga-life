@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Orga Life</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    /* Estilo customizado para checkboxes */
+    input[type="checkbox"] {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      background-color: #1a012b;
+      border: 2px solid #a855f7;
+      border-radius: 4px;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.2s ease;
+      vertical-align: middle;
+      margin-right: 6px;
+    }
+
+    input[type="checkbox"]:checked {
+      background-color: #a855f7;
+      border-color: #a855f7;
+    }
+
+    input[type="checkbox"]:checked::after {
+      content: '✔';
+      color: white;
+      font-size: 12px;
+      position: absolute;
+      left: 2px;
+      top: -1px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <link rel="icon" type="image/png" href="icon.png">
+<link rel="apple-touch-icon" href="icon.png">
+  <div class="header">
+    <div class="logo-header">
+      <div class="logo-small">OL</div>
+<div style="display: flex; flex-direction: column; align-items: center;">
+  <span class="site-title-header">Orga Life</span>
+  <span style="font-size: 12px; color: #bbb; margin-top: -2px;">v2025.05</span>
+</div>
+      
+    </div>
+    <div class="nav-menu">
+      <button class="nav-btn" onclick="abrirMetas()">Metas</button>
+      <button  class="nav-btn" onclick="window.location.href='financas.html'">Finanças</button>
+      <button class="nav-btn" onclick="alert('Em breve: Organize suas Tarefas!')">Tarefas</button>
+    </div>
+  </div>
+
+  <div class="main-container" id="mainContainer">
+    <div class="site-slogan">Organize sua vida. Supere seus limites.</div>
+    <div class="welcome-msg">
+      Bem-vindo ao <b>Orga Life</b>!<br>
+      Aqui você transforma seus objetivos em realidade.<br>
+      Controle <b>metas</b>, organize <b>finanças</b> e vença a rotina.
+    </div>
+    <img src="imagem1.png" alt="Banner"
+         style="width: 100%; max-width: 650px; border-radius: 18px; box-shadow: 0 6px 24px #0007; margin: 22px 0 0 0;">
+    <div class="resumo-metas-home" id="resumoMetasHome"></div>
+  </div>
+
+  <div id="metasPage">
+    <h2>Minhas Metas</h2>
+    <div id="motivacionalBox">
+      <span id="motivacionalFrase">Acredite nos seus sonhos e trabalhe para realizá-los!</span>
+      <button onclick="editarFraseMotivacional()">Editar</button>
+    </div>
+    <form id="metaForm">
+      <input type="text" id="tituloMeta" placeholder="Nome da meta" required>
+      <select id="tipoMeta" onchange="atualizaExibeCamposMeta()">
+        <option value="">Tipo da meta</option>
+        <option value="normal">Normal</option>
+        <option value="financeira">Financeira</option>
+      </select>
+      <input type="number" id="valorAlvo" placeholder="Valor alvo (apenas se financeira)">
+      <div id="etapasBoxForm" class="etapas-box">
+        <div class="etapas-add-row">
+          <input type="text" id="novaEtapa" placeholder="Adicionar etapa...">
+          <button type="button" onclick="adicionarEtapaForm()">Adicionar</button>
+        </div>
+        <ul id="listaEtapasForm" class="etapas-list"></ul>
+      </div>
+      <textarea id="obsMetaForm" rows="2" placeholder="Observação (opcional)"></textarea>
+      <input type="date" id="dataAlvoForm">
+      <button type="submit">Adicionar Meta</button>
+    </form>
+    <div id="listaMetas"></div>
+    <button class="voltar-btn" onclick="fecharMetas()">← Voltar ao início</button>
+  </div>
+
+  <div class="footer">© 2025 Orga Life • Desenvolvido por Esley</div>
+  <script src="script.js"></script>
+</body>
+</html>

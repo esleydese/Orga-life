@@ -1,0 +1,314 @@
+<!DOCTYPE html><html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Orga Life - Finanças</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #1b0028 0%, #150124 100%);
+      color: #fff;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+    }.header {
+  background-color: #180429e6;
+  box-shadow: 0 3px 12px #0003;
+  padding: 15px 20px;
+  text-align: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.nav-bar {
+  display: flex;
+  justify-content: space-around;
+  background-color: #24063d;
+  padding: 10px 0;
+}
+
+.nav-button {
+  background: transparent;
+  border: none;
+  color: #aaa;
+  font-weight: 500;
+  font-size: 16px;
+  padding: 10px 16px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.nav-button.active {
+  color: #fff;
+  font-weight: 600;
+  border-bottom: 2px solid #a86fff;
+}
+
+.nav-button:hover {
+  color: #ddd;
+}
+
+.container { padding: 20px; }
+section {
+  background-color: #24063d;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 20px;
+  box-shadow: 0 0 10px #0005;
+}
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+input, select, button {
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  font-size: 15px;
+}
+input, select {
+  background-color: #33004b;
+  color: white;
+}
+button {
+  background-color: #6c00c9;
+  color: white;
+  cursor: pointer;
+}
+.transacao {
+  background-color: #31003e;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+}
+.transacao.receita { border-left: 4px solid #00ff99; }
+.transacao.despesa { border-left: 4px solid #ff4d4d; }
+canvas {
+  background-color: #fff;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  padding: 10px;
+}
+
+  </style>
+</head>
+<body>  <div class="header">
+    <h1>Orga Life</h1>
+  </div>  <!-- Barra de Navegação -->  <div class="nav-bar">
+    <button class="nav-button" onclick="location.href='index.html'">Metas</button>
+    <button class="nav-button active">Finanças</button>
+    <button class="nav-button" onclick="location.href='tarefas.html'">Tarefas</button>
+  </div>  <div class="container"><section>
+  <h2>Resumo</h2>
+  <p>Saldo: <span id="saldoAtual">R$ 0,00</span></p>
+  <p>Receitas: <span id="totalReceitas">R$ 0,00</span></p>
+  <p>Despesas: <span id="totalDespesas">R$ 0,00</span></p>
+</section>
+
+<section>
+  <label for="filtroMes">Filtrar por mês:</label>
+  <input type="month" id="filtroMes" onchange="filtrarTransacoesPorMes()">
+</section>
+
+<section>
+  <form id="formTransacao" onsubmit="adicionarTransacao(event)">
+    <select id="tipoTransacao">
+      <option value="receita">Receita</option>
+      <option value="despesa">Despesa</option>
+    </select>
+    <input type="number" id="valorTransacao" placeholder="Valor" required />
+    <input type="text" id="descricaoTransacao" placeholder="Descrição" required />
+    <input type="date" id="dataTransacao" required />
+    <select id="categoriaTransacao" required>
+      <option value="" disabled selected>Categoria</option>
+      <option value="Alimentação">Alimentação</option>
+      <option value="Transporte">Transporte</option>
+      <option value="Lazer">Lazer</option>
+      <option value="Fixo">Fixo</option>
+      <option value="Investimento">Investimento</option>
+      <option value="Outros">Outros</option>
+    </select>
+    <button type="submit">Salvar</button>
+  </form>
+</section>
+
+<section>
+  <h3>Transações</h3>
+  <div id="listaTransacoes"></div>
+</section>
+
+<section>
+  <h3>Gastos por Categoria</h3>
+  <canvas id="graficoCategorias"></canvas>
+  <h3>Saldo por Mês</h3>
+  <canvas id="graficoEvolucao"></canvas>
+</section>
+
+<section>
+  <button onclick="exportarCSV()">Exportar CSV</button>
+  <button onclick="limparTodasTransacoes()">Limpar Tudo</button>
+</section>
+
+  </div>  <!-- Scripts -->  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>  <script>
+    let transacoes = JSON.parse(localStorage.getItem("transacoesOrgaLife")) || [];
+
+    function salvarTransacoes() {
+        localStorage.setItem("transacoesOrgaLife", JSON.stringify(transacoes));
+    }
+
+    function adicionarTransacao(event) {
+        event.preventDefault();
+        const tipo = document.getElementById("tipoTransacao").value;
+        const valor = parseFloat(document.getElementById("valorTransacao").value);
+        const descricao = document.getElementById("descricaoTransacao").value;
+        const data = document.getElementById("dataTransacao").value;
+        const categoria = document.getElementById("categoriaTransacao").value;
+
+        if (!valor || !descricao || !data || !categoria) return;
+
+        transacoes.push({ tipo, valor, descricao, data, categoria });
+        salvarTransacoes();
+        document.getElementById("formTransacao").reset();
+        renderizarTransacoes();
+        atualizarResumo();
+        atualizarGraficos();
+    }
+
+    function renderizarTransacoes() {
+        const lista = document.getElementById("listaTransacoes");
+        lista.innerHTML = "";
+        const mesSelecionado = document.getElementById("filtroMes").value;
+
+        transacoes
+          .filter(t => !mesSelecionado || t.data.startsWith(mesSelecionado))
+          .forEach(t => {
+            const div = document.createElement("div");
+            div.className = `transacao ${t.tipo}`;
+            div.innerHTML = `
+                <span>${t.data} - ${t.descricao} (${t.categoria})</span>
+                <span>R$ ${t.valor.toFixed(2)}</span>`;
+            lista.appendChild(div);
+        });
+    }
+
+    function atualizarResumo() {
+        let saldo = 0, receitas = 0, despesas = 0;
+
+        transacoes.forEach(t => {
+            if (t.tipo === "receita") {
+                receitas += t.valor;
+                saldo += t.valor;
+            } else {
+                despesas += t.valor;
+                saldo -= t.valor;
+            }
+        });
+
+        document.getElementById("saldoAtual").textContent = `R$ ${saldo.toFixed(2)}`;
+        document.getElementById("totalReceitas").textContent = `R$ ${receitas.toFixed(2)}`;
+        document.getElementById("totalDespesas").textContent = `R$ ${despesas.toFixed(2)}`;
+    }
+
+    function filtrarTransacoesPorMes() {
+        renderizarTransacoes();
+    }
+
+    function exportarCSV() {
+        if (transacoes.length === 0) return alert("Nenhuma transação para exportar.");
+
+        let csv = "Tipo,Valor,Descrição,Data,Categoria\n";
+        transacoes.forEach(t => {
+            csv += `${t.tipo},${t.valor},${t.descricao},${t.data},${t.categoria}\n`;
+        });
+
+        const blob = new Blob([csv], { type: "text/csv" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "transacoes.csv";
+        a.click();
+        URL.revokeObjectURL(url);
+    }
+
+    function limparTodasTransacoes() {
+        if (confirm("Deseja apagar todas as transações?")) {
+            transacoes = [];
+            salvarTransacoes();
+            renderizarTransacoes();
+            atualizarResumo();
+            atualizarGraficos();
+        }
+    }
+
+    let graficoCategorias, graficoEvolucao;
+
+    function atualizarGraficos() {
+        const categorias = {};
+        const saldoPorMes = {};
+
+        transacoes.forEach(t => {
+            const mes = t.data.slice(0, 7);
+            saldoPorMes[mes] = saldoPorMes[mes] || 0;
+            saldoPorMes[mes] += t.tipo === "receita" ? t.valor : -t.valor;
+            categorias[t.categoria] = (categorias[t.categoria] || 0) + t.valor;
+        });
+
+        if (graficoCategorias) graficoCategorias.destroy();
+        const ctx1 = document.getElementById("graficoCategorias").getContext("2d");
+        graficoCategorias = new Chart(ctx1, {
+            type: "pie",
+            data: {
+                labels: Object.keys(categorias),
+                datasets: [{
+                    data: Object.values(categorias),
+                    backgroundColor: ["#00ff99", "#ff4d4d", "#ffaa00", "#007bff", "#a020f0", "#555"]
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { labels: { color: "#fff" } } }
+            }
+        });
+
+        if (graficoEvolucao) graficoEvolucao.destroy();
+        const ctx2 = document.getElementById("graficoEvolucao").getContext("2d");
+        graficoEvolucao = new Chart(ctx2, {
+            type: "line",
+            data: {
+                labels: Object.keys(saldoPorMes).sort(),
+                datasets: [{
+                    label: "Saldo por Mês",
+                    data: Object.values(saldoPorMes),
+                    fill: false,
+                    borderColor: "#00ff99",
+                    tension: 0.3
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: { ticks: { color: "#fff" } },
+                    y: { ticks: { color: "#fff" } }
+                },
+                plugins: { legend: { labels: { color: "#fff" } } }
+            }
+        });
+    }
+
+    // Inicialização
+    renderizarTransacoes();
+    atualizarResumo();
+    atualizarGraficos();
+  </script></body>
+</html>Altere nesse html, por que no outro não funcionou
+

@@ -1,0 +1,392 @@
+body {
+    font-family: 'Poppins', Arial, sans-serif;
+    background: linear-gradient(135deg, #1b0028 0%, #150124 100%);
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    color: #fff;
+}
+
+/* Header */
+.header {
+    width: 100%;
+    background: #180429e6;
+    box-shadow: 0 3px 12px #0003;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 22px;
+    height: 60px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+}
+
+.logo-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-small {
+    width: 38px;
+    height: 38px;
+    background: linear-gradient(135deg, #7102ad 65%, #1a0035 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 1.22em;
+    font-weight: 600;
+    letter-spacing: 2px;
+    box-shadow: 0 1px 8px #7102ad33;
+    user-select: none;
+}
+
+.site-title-header {
+    font-size: 1.11em;
+    letter-spacing: 1px;
+    font-weight: 600;
+    color: #a75df2;
+}
+
+.nav-menu {
+    display: flex;
+    gap: 14px;
+}
+
+.nav-btn {
+    background: none;
+    border: none;
+    color: #e7d5ff;
+    font-size: 1em;
+    font-weight: 500;
+    padding: 7px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+    appearance: none;
+}
+
+.nav-btn:hover,
+.nav-btn.active {
+    background: #a75df233;
+    color: #fff;
+}
+
+/* Main */
+.main-container {
+    max-width: 420px;
+    margin: 90px auto 0 auto;
+    background: rgba(20,8,36, 0.97);
+    border-radius: 18px;
+    box-shadow: 0 8px 32px #0004;
+    padding: 28px 18px 18px 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.site-slogan {
+    color: #cdb6e2;
+    font-size: 1em;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.welcome-msg {
+    font-size: 1em;
+    color: #e8e0ff;
+    margin-bottom: 22px;
+    background: linear-gradient(90deg, #3d2376cc, #2b1745cc 80%);
+    border-radius: 10px;
+    padding: 13px 12px 11px 12px;
+    text-align: center;
+    box-shadow: 0 1px 7px #0002;
+}
+
+.footer {
+    margin: 44px auto 12px auto;
+    text-align: center;
+    font-size: 0.97em;
+    color: #cdb6e2;
+    letter-spacing: 1px;
+}
+
+/* Página de metas */
+#metasPage {
+    display: none;
+    max-width: 440px;
+    margin: 90px auto 0 auto;
+    background: rgba(20,8,36,0.98);
+    border-radius: 18px;
+    box-shadow: 0 8px 32px #0004;
+    padding: 28px 18px 20px 18px;
+}
+
+#metasPage h2 {
+    color: #a75df2;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#metaForm input,
+#metaForm select,
+#metaForm textarea {
+    width: 100%;
+    padding: 9px 12px;
+    border-radius: 8px;
+    border: 1px solid #442464;
+    margin-bottom: 12px;
+    font-size: 1em;
+    background: #27133d;
+    color: #fff;
+}
+
+#valorAlvo,
+#etapasBoxForm,
+#obsMetaForm,
+#dataAlvoForm {
+    display: none;
+}
+
+#metaForm button[type="submit"] {
+    background: linear-gradient(90deg,#5e00c7 60%,#a75df2 120%);
+    color: #fff;
+    padding: 11px 0;
+    border: none;
+    border-radius: 8px;
+    width: 100%;
+    font-size: 1.07em;
+    font-weight: 600;
+    box-shadow: 0 2px 8px #a75df255;
+    cursor: pointer;
+}
+
+/* Etapas */
+.etapas-box {
+    background: #221534;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    padding: 8px 10px;
+}
+
+.etapas-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.etapas-list li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 6px;
+    font-size: 1em;
+}
+
+.etapas-list li:last-child {
+    margin-bottom: 0;
+}
+
+.etapas-list input[type="checkbox"] {
+    accent-color: #a75df2;
+    margin-right: 8px;
+    transform: scale(1.15);
+}
+
+.etapas-add-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.etapas-add-row input {
+    flex: 1;
+}
+
+.etapas-add-row button {
+    background: #a75df2;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 7px 13px;
+    font-weight: 600;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+.obs-meta {
+    font-size: 0.97em;
+    color: #cdb6e2;
+    margin-bottom: 5px;
+    word-break: break-word;
+}
+
+.data-meta {
+    font-size: 0.97em;
+    color: #e7d5ff;
+    margin-bottom: 7px;
+}
+
+.concluida-badge {
+    display: inline-block;
+    background: #43a047;
+    color: #fff;
+    font-size: 0.97em;
+    border-radius: 8px;
+    padding: 3px 13px;
+    margin-left: 7px;
+    margin-bottom: 4px;
+}
+
+/* Lista de metas */
+#listaMetas div {
+    background: #21122e;
+    border-radius: 8px;
+    padding: 14px 12px;
+    margin-bottom: 10px;
+    color: #fff;
+    box-shadow: 0 2px 6px #0003;
+}
+
+#listaMetas button {
+    background: #a75df2;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 4px 10px;
+    margin-right: 7px;
+    cursor: pointer;
+}
+
+#listaMetas button:last-child {
+    background: #ff6464;
+    margin-right: 0;
+}
+
+#metasPage .voltar-btn {
+    background: none;
+    border: none;
+    color: #cdb6e2;
+    font-size: 1em;
+    margin: 16px auto 0 auto;
+    display: block;
+    cursor: pointer;
+}
+
+/* Resumo das metas na home */
+.resumo-metas-home {
+    width: 100%;
+    margin: 28px 0 0 0;
+}
+
+.resumo-metas-titulo {
+    color: #a75df2;
+    font-weight: 600;
+    font-size: 1.12em;
+    margin-bottom: 16px;
+    letter-spacing: 1px;
+}
+
+.meta-card-home {
+    background: #23113a;
+    border-radius: 13px;
+    padding: 15px 14px 13px 14px;
+    box-shadow: 0 2px 8px #0004;
+    margin-bottom: 18px;
+}
+
+.meta-titulo-home {
+    font-weight: 600;
+    font-size: 1.06em;
+    margin-bottom: 2px;
+}
+
+.meta-info-home {
+    color: #b299da;
+    font-size: 0.97em;
+    margin-bottom: 10px;
+}
+
+.progress-bar-home {
+    height: 12px;
+    background: #38245d;
+    border-radius: 7px;
+    margin: 7px 0 8px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.progress-fill-home {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    background: linear-gradient(90deg,#a75df2 70%,#5e00c7 100%);
+    border-radius: 7px 0 0 7px;
+    transition: width .4s;
+    height: 100%;
+}
+
+.progress-text-home {
+    position: absolute;
+    right: 8px;
+    top: -4px;
+    font-size: .92em;
+    color: #fff;
+    z-index: 2;
+}
+
+.etapas-home-list {
+    margin: 0;
+    padding-left: 15px;
+    color: #fff;
+    font-size: 0.99em;
+}
+
+.btn-ver-todas-metas {
+    background: #a75df2;
+    color: #fff;
+    border: none;
+    border-radius: 7px;
+    padding: 8px 19px;
+    font-weight: 600;
+    font-size: 1em;
+    margin: 14px auto 5px auto;
+    display: block;
+    cursor: pointer;
+    box-shadow: 0 2px 8px #a75df255;
+}
+
+/* Responsivo */
+@media (max-width: 520px) {
+    .main-container {
+        max-width: 97vw;
+    }
+
+    .header {
+        padding: 0 7vw;
+    }
+
+    .footer {
+        margin-top: 30px;
+    }
+    #motivacionalBox button {
+    background: #a75df2;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 0.95em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+#motivacionalBox button:hover {
+    background: #902ce8;
+}
+    
+}
